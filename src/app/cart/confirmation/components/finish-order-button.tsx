@@ -69,7 +69,7 @@ const FinishOrderButton = () => {
 
           <DialogFooter>
             <Button className="rounded-full" size="lg">
-              Ver meus pedidos
+              <Link href="/my-orders">Ver meus Pedidos</Link>
             </Button>
             <Button
               className="rounded-full"
@@ -77,7 +77,7 @@ const FinishOrderButton = () => {
               size="lg"
               asChild
             >
-              <Link href="/">Voltar para a loja</Link>
+              <Link href="/">Voltar para a Loja</Link>
             </Button>
           </DialogFooter>
         </DialogContent>
