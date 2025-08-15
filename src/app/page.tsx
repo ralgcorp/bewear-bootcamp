@@ -6,6 +6,7 @@ import CategorySelector from "@/components/common/category-selector";
 import { productTable } from "@/db/schema";
 import Showcase from "@/components/common/showcase";
 import CarouselList from "@/components/common/carousel-list";
+import Brands from "@/components/common/brands";
 
 const Home = async () => {
   const products = await db.query.productTable.findMany({
@@ -45,7 +46,7 @@ const Home = async () => {
               className="hidden h-auto w-full md:block"
             />
           </div>
-
+          <Brands />
           <CarouselList
             products={newlyCreatedProducts}
             title="Novos produtos"
