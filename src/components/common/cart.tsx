@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBasketIcon } from "lucide-react";
+import { ShoppingBagIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { formatCentsToBRL } from "@/helpers/money";
@@ -23,11 +23,14 @@ export const Cart = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon">
-          <ShoppingBasketIcon />
+        <Button
+          variant="link"
+          className="text-black [&_svg:not([class*='size-'])]:size-auto"
+        >
+          <ShoppingBagIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="rounded-4xl">
         <SheetHeader>
           <SheetTitle>Carrinho</SheetTitle>
         </SheetHeader>

@@ -1,12 +1,11 @@
-import { Header } from "@/components/common/header";
 import ProductList from "@/components/common/products-list";
 import { db } from "@/db";
 import { desc } from "drizzle-orm";
 import Image from "next/image";
 import CategorySelector from "@/components/common/category-selector";
-import Footer from "@/components/common/footer";
 import { productTable } from "@/db/schema";
 import Showcase from "@/components/common/showcase";
+import CarouselList from "@/components/common/carousel-list";
 
 const Home = async () => {
   const products = await db.query.productTable.findMany({
@@ -27,7 +26,6 @@ const Home = async () => {
   return (
     <>
       <div className="container mx-auto">
-        <Header />
         <div className="space-y-6">
           <div className="px-5">
             <Image
@@ -48,13 +46,20 @@ const Home = async () => {
             />
           </div>
 
-          <ProductList products={products} title="Mais vendidos" />
+          <CarouselList
+            products={newlyCreatedProducts}
+            title="Novos produtos"
+          />
 
-          <div className="px-5">
-            <CategorySelector categories={categories} />
+          <div className="block px-5 md:hidden">
+            <div className="rounded-3xl bg-[#F4EFFF] p-6">
+              <div className="grid grid-cols-2 gap-3">
+                <CategorySelector categories={categories} />
+              </div>
+            </div>
           </div>
 
-          <div className="px-5">
+          <div className="block px-5 md:hidden">
             <Image
               src="/banner-02.png"
               alt="Leve uma vida com estilo"
@@ -65,9 +70,13 @@ const Home = async () => {
             />
           </div>
 
-          <ProductList products={newlyCreatedProducts} title="Novos produtos" />
+          <div className="block px-5 md:hidden">
+            <ProductList
+              products={newlyCreatedProducts}
+              title="Novos produtos"
+            />
+          </div>
           <Showcase />
-          <Footer />
         </div>
       </div>
     </>

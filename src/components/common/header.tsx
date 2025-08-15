@@ -1,6 +1,12 @@
 "use client";
 
-import { LogInIcon, LogOutIcon, MenuIcon } from "lucide-react";
+import {
+  LogInIcon,
+  LogOutIcon,
+  MenuIcon,
+  Search,
+  UserIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import {
@@ -19,19 +25,69 @@ export const Header = () => {
   const { data: session } = authClient.useSession();
 
   return (
-    <header className="flex items-center justify-between p-5">
+    <header className="container mx-auto flex items-center justify-between p-5">
+      <div className="w-[250px] px-5">
+        {session?.user ? (
+          <>
+            <div className="flex justify-between">
+              <div className="flex items-center">
+                <Button
+                  variant="link"
+                  size="icon"
+                  className="text-black [&_svg:not([class*='size-'])]:size-auto"
+                  onClick={() => authClient.signOut()}
+                >
+                  <UserIcon />
+                </Button>
+                <div>
+                  <h3 className="font-semibold">
+                    Olá, {session?.user?.name} !
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center">
+            <Button
+              size="icon"
+              asChild
+              variant="link"
+              className="text-black [&_svg:not([class*='size-'])]:size-auto"
+            >
+              <Link href="/authentication">
+                <LogInIcon />
+              </Link>
+            </Button>
+            <h2 className="font-semibold">Olá. Faça seu login!</h2>
+          </div>
+        )}
+      </div>
+
       <Link href="/">
         <Image src="/logo.svg" alt="BEWEAR" width={100} height={26.14} />
       </Link>
 
-      <div className="flex items-center gap-3">
+      <div className="flex w-[250px] items-center justify-end gap-3">
+        <Button
+          variant="link"
+          className="hidden text-black md:block [&_svg:not([class*='size-'])]:size-auto"
+        >
+          <Search />
+        </Button>
+        <div className="separator hidden md:block">|</div>
+        <Cart />
+        <div className="separator block md:hidden">|</div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button
+              variant="link"
+              className="block text-black md:hidden [&_svg:not([class*='size-'])]:size-auto"
+            >
               <MenuIcon />
             </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className="rounded-4xl">
             <SheetHeader>
               <SheetTitle>Menu</SheetTitle>
             </SheetHeader>
@@ -69,9 +125,9 @@ export const Header = () => {
               ) : (
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold">Olá. Faça seu login!</h2>
-                  <Button size="icon" asChild variant="outline">
+                  <Button asChild variant="outline" className="rounded-full">
                     <Link href="/authentication">
-                      <LogInIcon />
+                      Login <LogInIcon />
                     </Link>
                   </Button>
                 </div>
@@ -79,7 +135,6 @@ export const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
-        <Cart />
       </div>
     </header>
   );
