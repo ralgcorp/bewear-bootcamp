@@ -2,14 +2,12 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { Header } from "@/components/common/header";
 import { db } from "@/db";
 import { shippingAddressTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 import CartSummary from "../components/cart-summary";
 import Addresses from "./components/addresses";
-import Footer from "@/components/common/footer";
 
 const IdentificationPage = async () => {
   const session = await auth.api.getSession({
@@ -45,7 +43,6 @@ const IdentificationPage = async () => {
   );
   return (
     <div>
-      <Header />
       <div className="space-y-4 px-5">
         <Addresses
           shippingAddresses={shippingAddresses}
@@ -63,9 +60,6 @@ const IdentificationPage = async () => {
             imageUrl: item.productVariant.imageUrl,
           }))}
         />
-      </div>
-      <div className="mt-12">
-        <Footer />
       </div>
     </div>
   );
