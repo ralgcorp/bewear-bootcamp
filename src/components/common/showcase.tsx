@@ -11,7 +11,7 @@ const Showcase = () => {
             Nike Therma FIT Headed
           </p>
           <Image
-            src="/showcase-01.png"
+            src="/Showcase-01.png"
             alt="Leve uma vida com estilo"
             height={0}
             width={0}
@@ -34,7 +34,7 @@ const Showcase = () => {
             Nike Therma FIT Headed
           </p>
           <Image
-            src="/showcase-02.png"
+            src="/Showcase-02.png"
             alt="Leve uma vida com estilo"
             height={0}
             width={0}
@@ -57,7 +57,7 @@ const Showcase = () => {
             Nike Therma FIT Headed
           </p>
           <Image
-            src="/showcase-03.png"
+            src="/Showcase-03.png"
             alt="Leve uma vida com estilo"
             height={0}
             width={0}
