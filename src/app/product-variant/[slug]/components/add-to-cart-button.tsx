@@ -29,7 +29,7 @@ const AddToCartButton = ({
   });
   return (
     <Button
-      className="rounded-full"
+      className="rounded-full py-6 text-lg font-bold"
       size="lg"
       variant="outline"
       disabled={isPending}

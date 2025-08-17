@@ -47,10 +47,7 @@ const Home = async () => {
             />
           </div>
           <Brands />
-          <CarouselList
-            products={newlyCreatedProducts}
-            title="Novos produtos"
-          />
+          <CarouselList products={newlyCreatedProducts} title="Mais Vendidos" />
 
           <div className="block px-5 md:hidden">
             <div className="rounded-3xl bg-[#F4EFFF] p-6">

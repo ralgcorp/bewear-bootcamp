@@ -12,18 +12,18 @@ import {
 import { productTable, productVariantTable } from "@/db/schema";
 import ProductItem from "./product-item";
 
-interface ProductListProps {
+interface CarouselListProps {
   title: string;
   products: (typeof productTable.$inferSelect & {
     variants: (typeof productVariantTable.$inferSelect)[];
   })[];
 }
 
-const CarouselList = ({ products }: ProductListProps) => {
+const CarouselList = ({ title, products }: CarouselListProps) => {
   return (
     <Carousel opts={{ align: "start" }} className="w-full px-5">
       <div className="flex items-center justify-between py-4">
-        <div className="text-2xl font-bold">Mais Vendidos</div>
+        <div className="text-2xl font-bold">{title}</div>
         <div className="flex font-semibold">
           <div className="flex items-center px-5 text-sm font-bold">
             Ver Todos
