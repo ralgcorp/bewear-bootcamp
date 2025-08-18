@@ -6,10 +6,12 @@ const Menu = async () => {
 
   return (
     <>
-      <div className="container mx-auto mb-5 hidden md:block">
-        <div className="space-y-6">
-          <div className="flex justify-around px-5">
-            <CategorySelector categories={categories} />
+      <div className="mb-6 w-full border-b-2 py-3">
+        <div className="container mx-auto mb-5 hidden md:block">
+          <div className="space-y-6">
+            <div className="flex justify-around px-5">
+              <CategorySelector categories={categories} />
+            </div>
           </div>
         </div>
       </div>

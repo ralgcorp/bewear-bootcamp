@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth";
 
 import CartSummary from "../components/cart-summary";
 import Addresses from "./components/addresses";
+import StepBar from "@/components/common/stepbar";
 
 const IdentificationPage = async () => {
   const session = await auth.api.getSession({
@@ -42,26 +43,33 @@ const IdentificationPage = async () => {
     0,
   );
   return (
-    <div>
-      <div className="space-y-4 px-5">
-        <Addresses
-          shippingAddresses={shippingAddresses}
-          defaultShippingAddressId={cart.shippingAddress?.id || null}
-        />
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
+    <>
+      <StepBar />
+      <div>
+        <div className="grid gap-4 md:grid-cols-5">
+          <div className="p-4 md:col-span-3">
+            <Addresses
+              shippingAddresses={shippingAddresses}
+              defaultShippingAddressId={cart.shippingAddress?.id || null}
+            />
+          </div>
+          <div className="p-4 md:col-span-2">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBagIcon } from "lucide-react";
+import { ShoppingBagIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { formatCentsToBRL } from "@/helpers/money";
@@ -17,11 +17,16 @@ import {
 } from "../ui/sheet";
 import CartItem from "./cart-item";
 import Link from "next/link";
+import { useState } from "react";
 
 export const Cart = () => {
+  const [open, setOpen] = useState(false);
   const { data: cart } = useCart();
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="link"
@@ -30,11 +35,17 @@ export const Cart = () => {
           <ShoppingBagIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent className="rounded-4xl">
+      <SheetContent className="rounded-4xl [&>button:last-child]:hidden">
         <SheetHeader>
-          <SheetTitle>Carrinho</SheetTitle>
+          <SheetTitle className="mt-2 px-3">Carrinho</SheetTitle>
         </SheetHeader>
-
+        <Button
+          onClick={handleClose}
+          variant="outline"
+          className="absolute top-4 right-4 h-9 w-9 rounded-full bg-gray-200"
+        >
+          <XIcon />
+        </Button>
         <div className="flex h-full flex-col px-5 pb-5">
           <div className="flex h-full max-h-full flex-col overflow-hidden">
             <ScrollArea className="h-full">

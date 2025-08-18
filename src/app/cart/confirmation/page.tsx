@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth";
 import CartSummary from "../components/cart-summary";
 import { formatAddress } from "../helpers/address";
 import FinishOrderButton from "./components/finish-order-button";
+import StepBar from "@/components/common/stepbar";
 
 const ConfirmationPage = async () => {
   const session = await auth.api.getSession({
@@ -42,36 +43,45 @@ const ConfirmationPage = async () => {
     redirect("/cart/identification");
   }
   return (
-    <div>
-      <div className="space-y-4 px-5">
-        <Card>
-          <CardHeader>
-            <CardTitle>Identificação</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
+    <>
+      <StepBar />
+      <div>
+        <div className="grid gap-4 md:grid-cols-5">
+          <div className="p-4 md:col-span-3">
             <Card>
-              <CardContent>
-                <p className="text-sm">{formatAddress(cart.shippingAddress)}</p>
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold">Pagamento</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <Card>
+                  <CardContent>
+                    <p className="text-sm font-semibold">
+                      {formatAddress(cart.shippingAddress)}
+                    </p>
+                  </CardContent>
+                </Card>
+                <FinishOrderButton />
               </CardContent>
             </Card>
-            <FinishOrderButton />
-          </CardContent>
-        </Card>
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
+          </div>
+          <div className="p-4 md:col-span-2">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
+          </div>
+        </div>
+        <div className="mt-12"></div>
       </div>
-      <div className="mt-12"></div>
-    </div>
+    </>
   );
 };
 

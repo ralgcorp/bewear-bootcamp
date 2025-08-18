@@ -26,24 +26,22 @@ const CartSummary = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Resumo</CardTitle>
+        <CardTitle className="text-2xl font-bold">Seu pedido</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex justify-between">
-          <p className="text-sm">Subtotal</p>
+          <p className="text-sm font-semibold">Subtotal</p>
           <p className="text-muted-foreground text-sm font-medium">
             {formatCentsToBRL(subtotalInCents)}
           </p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm">Frete</p>
+          <p className="text-sm font-semibold">Frete</p>
           <p className="text-muted-foreground text-sm font-medium">GRÁTIS</p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm">Total</p>
-          <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(totalInCents)}
-          </p>
+          <p className="text-sm font-semibold">Total</p>
+          <p className="text-sm font-bold">{formatCentsToBRL(totalInCents)}</p>
         </div>
 
         <div className="py-3">

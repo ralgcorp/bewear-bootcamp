@@ -35,7 +35,9 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Header />
           <Menu />
-          <div className="container mx-auto">{children}</div>
+          <div className="container mx-auto md:min-h-[calc(100vh-302px)]">
+            {children}
+          </div>
           <Footer />
         </ReactQueryProvider>
         <Toaster position="top-center" />

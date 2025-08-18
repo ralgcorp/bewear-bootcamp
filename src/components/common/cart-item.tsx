@@ -35,24 +35,24 @@ const CartItem = ({
   const handleDeleteClick = () => {
     removeProductFromCartMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Produto removido do carrinho.");
+        toast.success("Produto removido do carrinho.", { duration: 1000 });
       },
       onError: () => {
-        toast.error("Erro ao remover produto do carrinho.");
+        toast.error("Erro ao remover produto do carrinho., { duration: 1000 }");
       },
     });
   };
   const handleDecreaseQuantityClick = () => {
     decreaseCartProductQuantityMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Quantidade do produto diminuida.");
+        toast.success("Quantidade do produto diminuida.", { duration: 1000 });
       },
     });
   };
   const handleIncreaseQuantityClick = () => {
     increaseCartProductQuantityMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success("Quantidade do produto aumentada.");
+        toast.success("Quantidade do produto aumentada.", { duration: 1000 });
       },
     });
   };
@@ -91,7 +91,11 @@ const CartItem = ({
         </div>
       </div>
       <div className="flex flex-col items-end justify-center gap-2">
-        <Button variant="outline" size="icon" onClick={handleDeleteClick}>
+        <Button
+          variant="link"
+          className="block text-black"
+          onClick={handleDeleteClick}
+        >
           <TrashIcon />
         </Button>
         <p className="text-sm font-bold">
