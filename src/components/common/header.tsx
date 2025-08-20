@@ -20,9 +20,12 @@ import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Cart } from "./cart";
+import { SearchModal } from "./search-modal";
+import { useState } from "react";
 
 export const Header = () => {
   const { data: session } = authClient.useSession();
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   return (
     <header className="container mx-auto flex items-center justify-between p-5">
@@ -72,6 +75,7 @@ export const Header = () => {
         <Button
           variant="link"
           className="hidden text-black md:block [&_svg:not([class*='size-'])]:size-auto"
+          onClick={() => setIsSearchModalOpen(true)}
         >
           <Search />
         </Button>
@@ -136,6 +140,11 @@ export const Header = () => {
           </SheetContent>
         </Sheet>
       </div>
+
+      <SearchModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+      />
     </header>
   );
 };
