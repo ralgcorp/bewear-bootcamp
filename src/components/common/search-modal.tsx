@@ -100,7 +100,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                 placeholder="Digite para buscar produtos..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-14 rounded-full border-2 border-black/30 px-6 pr-16 text-lg text-black placeholder:text-black/60 focus:outline-none"
+                className="h-14 rounded-full border-2 border-black/30 px-6 pr-16 text-lg text-black placeholder:text-black/60 focus:outline-none focus-visible:ring-[0px]"
                 autoFocus
               />
               <Button
