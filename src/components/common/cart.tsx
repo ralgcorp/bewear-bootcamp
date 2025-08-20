@@ -47,20 +47,29 @@ export const Cart = () => {
           <div className="flex h-full max-h-full flex-col overflow-hidden">
             <ScrollArea className="h-full">
               <div className="flex h-full flex-col gap-8">
-                {cart?.items.map((item) => (
-                  <CartItem
-                    key={item.id}
-                    id={item.id}
-                    productVariantId={item.productVariant.id}
-                    productName={item.productVariant.product.name}
-                    productVariantName={item.productVariant.name}
-                    productVariantImageUrl={item.productVariant.imageUrl}
-                    productVariantPriceInCents={
-                      item.productVariant.priceInCents
-                    }
-                    quantity={item.quantity}
-                  />
-                ))}
+                {cart?.items && cart.items.length > 0 ? (
+                  cart.items.map((item) => (
+                    <CartItem
+                      key={item.id}
+                      id={item.id}
+                      productVariantId={item.productVariant.id}
+                      productName={item.productVariant.product.name}
+                      productVariantName={item.productVariant.name}
+                      productVariantImageUrl={item.productVariant.imageUrl}
+                      productVariantPriceInCents={
+                        item.productVariant.priceInCents
+                      }
+                      quantity={item.quantity}
+                    />
+                  ))
+                ) : (
+                  <div className="flex h-full flex-col items-center justify-center gap-3 py-10">
+                    <ShoppingBagIcon className="text-muted-foreground h-16 w-16" />
+                    <p className="text-muted-foreground text-center text-lg font-semibold">
+                      Carrinho vazio
+                    </p>
+                  </div>
+                )}
               </div>
             </ScrollArea>
           </div>
@@ -70,22 +79,26 @@ export const Cart = () => {
               <Separator />
 
               <div className="flex items-center justify-between text-xs font-medium">
-                <p>Subtotal</p>
-                <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
+                <p className="text-sm font-semibold">Subtotal</p>
+                <p className="text-sm">
+                  {formatCentsToBRL(cart?.totalPriceInCents ?? 0)}
+                </p>
               </div>
 
               <Separator />
 
               <div className="flex items-center justify-between text-xs font-medium">
-                <p>Entrega</p>
-                <p>GRÁTIS</p>
+                <p className="text-sm font-semibold">Entrega</p>
+                <p className="text-sm">GRÁTIS</p>
               </div>
 
               <Separator />
 
               <div className="flex items-center justify-between text-xs font-medium">
-                <p>Total</p>
-                <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
+                <p className="text-lg font-semibold">Total</p>
+                <p className="text-sm">
+                  {formatCentsToBRL(cart?.totalPriceInCents ?? 0)}
+                </p>
               </div>
 
               <Button onClick={closeCart} className="mt-5 rounded-full" asChild>

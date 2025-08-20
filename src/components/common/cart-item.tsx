@@ -75,9 +75,11 @@ const CartItem = ({
             <Button
               className="h-4 w-4"
               variant="ghost"
-              onClick={handleDecreaseQuantityClick}
+              onClick={
+                quantity < 2 ? handleDeleteClick : handleDecreaseQuantityClick
+              }
             >
-              <MinusIcon />
+              {quantity < 2 ? <TrashIcon /> : <MinusIcon />}
             </Button>
             <p className="text-xs font-medium">{quantity}</p>
             <Button
@@ -91,13 +93,6 @@ const CartItem = ({
         </div>
       </div>
       <div className="flex flex-col items-end justify-center gap-2">
-        <Button
-          variant="link"
-          className="block text-black"
-          onClick={handleDeleteClick}
-        >
-          <TrashIcon />
-        </Button>
         <p className="text-sm font-bold">
           {formatCentsToBRL(productVariantPriceInCents)}
         </p>
