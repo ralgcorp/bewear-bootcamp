@@ -17,16 +17,13 @@ import {
 } from "../ui/sheet";
 import CartItem from "./cart-item";
 import Link from "next/link";
-import { useState } from "react";
+import { useCartSheet } from "@/hooks/use-cart-sheet";
 
 export const Cart = () => {
-  const [open, setOpen] = useState(false);
+  const { isOpen, setIsOpen, closeCart } = useCartSheet();
   const { data: cart } = useCart();
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
           variant="link"
@@ -40,7 +37,7 @@ export const Cart = () => {
           <SheetTitle className="mt-2 px-3">Carrinho</SheetTitle>
         </SheetHeader>
         <Button
-          onClick={handleClose}
+          onClick={closeCart}
           variant="outline"
           className="absolute top-4 right-4 h-9 w-9 rounded-full bg-gray-200"
         >
@@ -91,11 +88,7 @@ export const Cart = () => {
                 <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
               </div>
 
-              <Button
-                onClick={handleClose}
-                className="mt-5 rounded-full"
-                asChild
-              >
+              <Button onClick={closeCart} className="mt-5 rounded-full" asChild>
                 <Link href="/cart/identification">Finalizar compra</Link>
               </Button>
             </div>

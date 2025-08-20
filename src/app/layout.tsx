@@ -6,6 +6,7 @@ import ReactQueryProvider from "@/providers/react-query";
 import Footer from "@/components/common/footer";
 import { Header } from "@/components/common/header";
 import Menu from "@/components/common/menu";
+import { CartSheetProvider } from "@/hooks/use-cart-sheet";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReactQueryProvider>
-          <Header />
-          <Menu />
-          <div className="container mx-auto md:min-h-[calc(100vh-302px)]">
-            {children}
-          </div>
-          <Footer />
+          <CartSheetProvider>
+            <Header />
+            <Menu isBorder={true} />
+            <div className="container mx-auto md:min-h-[calc(100vh-302px)]">
+              {children}
+            </div>
+            <Footer />
+          </CartSheetProvider>
         </ReactQueryProvider>
         <Toaster position="top-center" />
       </body>
