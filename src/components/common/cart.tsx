@@ -101,7 +101,11 @@ export const Cart = () => {
                 </p>
               </div>
 
-              <Button onClick={closeCart} className="mt-5 rounded-full" asChild>
+              <Button
+                onClick={closeCart}
+                className="mt-5 rounded-full py-6 text-lg leading-2 font-semibold"
+                asChild
+              >
                 <Link href="/cart/identification">Finalizar compra</Link>
               </Button>
             </div>
