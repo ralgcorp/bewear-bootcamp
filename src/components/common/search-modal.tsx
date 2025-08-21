@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { useSearchProducts } from "@/hooks/queries/use-search-products";
 import { formatCentsToBRL } from "@/helpers/money";
 import Link from "next/link";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -121,7 +122,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
 
         {/* Resultados da busca */}
         {searchTerm && (
-          <div className="mt-8 w-full max-w-4xl overflow-hidden px-6">
+          <div className="container mt-8 w-full px-6">
             {error ? (
               <div className="py-8 text-center">
                 <p className="text-red-400">
@@ -135,62 +136,66 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
               </div>
             ) : searchResults.length > 0 ? (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-black">
+                <h3 className="px-5 text-lg font-semibold text-black">
                   {searchResults.length} resultado
                   {searchResults.length !== 1 ? "s" : ""} para "{searchTerm}"
                 </h3>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {searchResults.map((result) => (
-                    <Link
-                      key={result.id}
-                      href={`/product-variant/${result.variants[0]?.slug || result.slug}`}
-                      className="group rounded-lg border-1 border-black/10 p-4 backdrop-blur-sm hover:bg-black/10"
-                      onClick={() => onClose()}
-                    >
-                      <div className="flex flex-col">
-                        {/* Imagem do produto */}
-                        <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
-                          <img
-                            src={result.variants[0]?.imageUrl || ""}
-                            alt={result.name}
-                            className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
-                          />
-                        </div>
 
-                        {/* Informações do produto */}
-                        <div className="flex-1">
-                          <h4 className="font-medium text-black group-hover:text-black/90">
-                            {result.name}
-                          </h4>
-                          <p className="text-sm text-black/70">
-                            {result.category}
-                          </p>
-                          <div className="mt-2 flex items-center gap-2">
-                            <p className="text-sm font-semibold text-black">
-                              {formatCentsToBRL(result.minPriceInCents)}
+                {/* ScrollArea com altura máxima fixa */}
+                <ScrollArea className="h-[600px] w-full rounded-md px-5 [&_[data-radix-scroll-area-viewport]]:!block">
+                  <div className="grid gap-4 pr-2 md:grid-cols-2 lg:grid-cols-4">
+                    {searchResults.map((result) => (
+                      <Link
+                        key={result.id}
+                        href={`/product-variant/${result.variants[0]?.slug || result.slug}`}
+                        className="group rounded-lg border border-black/10 p-4 backdrop-blur-sm transition-colors hover:bg-gray-50"
+                        onClick={() => onClose()}
+                      >
+                        <div className="flex flex-col">
+                          {/* Imagem do produto */}
+                          <div className="mb-3 aspect-square w-full overflow-hidden rounded-lg">
+                            <img
+                              src={result.variants[0]?.imageUrl || ""}
+                              alt={result.name}
+                              className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+                            />
+                          </div>
+
+                          {/* Informações do produto */}
+                          <div className="flex-1">
+                            <h4 className="font-medium text-black group-hover:text-black/90">
+                              {result.name}
+                            </h4>
+                            <p className="text-sm text-black/70">
+                              {result.category}
                             </p>
-                            {result.minPriceInCents !==
-                              result.maxPriceInCents && (
-                              <span className="text-xs text-black/60">
-                                - {formatCentsToBRL(result.maxPriceInCents)}
-                              </span>
+                            <div className="mt-2 flex items-center gap-2">
+                              <p className="text-sm font-semibold text-black">
+                                {formatCentsToBRL(result.minPriceInCents)}
+                              </p>
+                              {result.minPriceInCents !==
+                                result.maxPriceInCents && (
+                                <span className="text-xs text-black/60">
+                                  - {formatCentsToBRL(result.maxPriceInCents)}
+                                </span>
+                              )}
+                            </div>
+                            {result.variants.length > 1 && (
+                              <p className="mt-1 text-xs text-black/50">
+                                {result.variants.length} cores disponíveis
+                              </p>
                             )}
                           </div>
-                          {result.variants.length > 1 && (
-                            <p className="mt-1 text-xs text-black/50">
-                              {result.variants.length} cores disponíveis
-                            </p>
-                          )}
-                        </div>
 
-                        {/* Ícone de link externo */}
-                        <div className="mt-2 flex justify-end">
-                          <ExternalLink className="h-4 w-4 text-black/40 group-hover:text-black/60" />
+                          {/* Ícone de link externo */}
+                          <div className="mt-2 flex justify-end">
+                            <ExternalLink className="h-4 w-4 text-black/40 group-hover:text-black/60" />
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      </Link>
+                    ))}
+                  </div>
+                </ScrollArea>
               </div>
             ) : (
               <div className="py-8 text-center">
