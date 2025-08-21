@@ -8,6 +8,7 @@ import { useSearchProducts } from "@/hooks/queries/use-search-products";
 import { formatCentsToBRL } from "@/helpers/money";
 import Link from "next/link";
 import { ScrollArea } from "../ui/scroll-area";
+import ButtonClose from "./button-close";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -81,15 +82,8 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
       >
         {/* Header do modal */}
         <div className="flex w-full max-w-4xl items-center justify-between px-6">
-          <h2 className="text-2xl font-bold text-black">Buscar produtos</h2>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="rounded-full bg-black/10 text-black hover:bg-black/20"
-          >
-            <X className="h-6 w-6" />
-          </Button>
+          <h2 className="text-4xl font-bold text-black">Buscar produtos</h2>
+          <ButtonClose onClick={onClose} className="absolute top-4 right-4" />
         </div>
 
         {/* Barra de busca centralizada */}
@@ -98,7 +92,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
             <div className="relative">
               <Input
                 type="text"
-                placeholder="Digite para buscar produtos..."
+                placeholder="Digite o que você procura . . ."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="h-14 rounded-full border-2 border-black/30 px-6 pr-16 text-lg text-black placeholder:text-black/60 focus:outline-none focus-visible:ring-[0px]"

@@ -17,6 +17,7 @@ import {
 import ProductItem from "@/components/common/product-item";
 import { Button } from "@/components/ui/button";
 import { categoryTable, productTable, productVariantTable } from "@/db/schema";
+import ButtonClose from "@/components/common/button-close";
 
 type SortField = "name" | "price";
 type SortOrder = "asc" | "desc";
@@ -163,7 +164,9 @@ const CategoryPageClient = ({
         {/* Barra lateral com filtros */}
         <div
           className={`w-64 flex-shrink-0 transition-all duration-300 ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            isSidebarOpen
+              ? "translate-x-0 rounded-4xl px-2 py-3"
+              : "-translate-x-full"
           } fixed top-0 left-0 z-40 h-full overflow-y-auto bg-white px-5 py-2 sm:relative sm:translate-x-0`}
         >
           <div className="mb-6 flex items-center justify-between">
@@ -171,14 +174,10 @@ const CategoryPageClient = ({
               <Filter className="h-5 w-5" />
               Filtros
             </h3>
-            <Button
-              variant="ghost"
-              size="sm"
+            <ButtonClose
               onClick={() => setIsSidebarOpen(false)}
               className="sm:hidden"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            />
           </div>
 
           {/* Filtro de Cores */}
@@ -382,7 +381,7 @@ const CategoryPageClient = ({
       {/* Overlay para mobile */}
       {isSidebarOpen && (
         <div
-          className="bg-opacity-50 fixed inset-0 z-30 bg-black sm:hidden"
+          className="bg-opacity-50 fixed inset-0 z-30 bg-black/50 sm:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}

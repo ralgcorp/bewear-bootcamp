@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBagIcon, XIcon } from "lucide-react";
+import { ShoppingBagIcon, X, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { formatCentsToBRL } from "@/helpers/money";
@@ -18,6 +18,7 @@ import {
 import CartItem from "./cart-item";
 import Link from "next/link";
 import { useCartSheet } from "@/hooks/use-cart-sheet";
+import ButtonClose from "./button-close";
 
 export const Cart = () => {
   const { isOpen, setIsOpen, closeCart } = useCartSheet();
@@ -36,13 +37,7 @@ export const Cart = () => {
         <SheetHeader>
           <SheetTitle className="mt-2 px-3">Carrinho</SheetTitle>
         </SheetHeader>
-        <Button
-          onClick={closeCart}
-          variant="outline"
-          className="absolute top-4 right-4 h-9 w-9 rounded-full bg-gray-200"
-        >
-          <XIcon />
-        </Button>
+        <ButtonClose onClick={closeCart} className="absolute top-4 right-4" />
         <div className="flex h-full flex-col px-5 pb-5">
           <div className="flex h-full max-h-full flex-col overflow-hidden">
             <ScrollArea className="h-full">
