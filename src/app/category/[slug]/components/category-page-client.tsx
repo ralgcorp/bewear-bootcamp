@@ -84,13 +84,13 @@ const CategoryPageClient = ({
   const getGridClasses = () => {
     switch (gridColumns) {
       case 2:
-        return "grid-cols-2";
+        return "sm:grid-cols-2";
       case 3:
-        return "grid-cols-3";
+        return "sm:grid-cols-3";
       case 4:
-        return "grid-cols-4";
+        return "sm:grid-cols-4";
       default:
-        return "grid-cols-2";
+        return "sm:grid-cols-2";
     }
   };
 
@@ -103,7 +103,7 @@ const CategoryPageClient = ({
           {/* Controles de visualização e ordenação */}
           <div className="flex items-center gap-4">
             {/* Botões de alteração do grid */}
-            <div className="flex items-center gap-2">
+            <div className="hidden items-center gap-2 sm:block">
               <Button
                 variant="outline"
                 size="sm"
@@ -134,7 +134,7 @@ const CategoryPageClient = ({
             </div>
 
             {/* Separador visual */}
-            <div className="h-6 w-px bg-gray-300"></div>
+            <div className="hidden h-6 w-px bg-gray-300 sm:block"></div>
 
             {/* Filtro de ordenação */}
             <div className="flex items-center gap-3">
