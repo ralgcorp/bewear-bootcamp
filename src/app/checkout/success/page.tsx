@@ -11,10 +11,12 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
+import StepBar from "@/components/common/stepbar";
 
 const CheckoutSuccessPage = () => {
   return (
     <>
+      <StepBar step={"STEP3"} />
       <Dialog open={true} onOpenChange={() => {}}>
         <DialogContent className="text-center">
           <Image

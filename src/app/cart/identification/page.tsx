@@ -44,7 +44,7 @@ const IdentificationPage = async () => {
   );
   return (
     <>
-      <StepBar />
+      <StepBar step={"STEP1"} />
       <div>
         <div className="grid gap-4 md:grid-cols-5">
           <div className="p-4 md:col-span-3">

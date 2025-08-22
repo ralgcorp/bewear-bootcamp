@@ -83,7 +83,7 @@ export const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
         {/* Header do modal */}
         <div className="flex w-full max-w-4xl items-center justify-between px-6">
           <h2 className="text-4xl font-bold text-black">Buscar produtos</h2>
-          <ButtonClose onClick={onClose} className="absolute top-4 right-4" />
+          <ButtonClose onClick={onClose} />
         </div>
 
         {/* Barra de busca centralizada */}
