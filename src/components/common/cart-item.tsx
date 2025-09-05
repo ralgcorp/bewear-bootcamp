@@ -38,7 +38,7 @@ const CartItem = ({
         toast.success("Produto removido do carrinho.", { duration: 1000 });
       },
       onError: () => {
-        toast.error("Erro ao remover produto do carrinho., { duration: 1000 }");
+        toast.error("Erro ao remover produto do carrinho.", { duration: 1000 });
       },
     });
   };

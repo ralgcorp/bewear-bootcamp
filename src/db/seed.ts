@@ -283,8 +283,8 @@ const products = [
       "Mochila resistente e confortável, ideal para o dia a dia e viagens.",
     categoryName: "Acessórios",
     variants: [
-      { color: "Preta", price: 12999 },
-      { color: "Branca", price: 12999 },
+      { sku: "MOCHILA-PRETA", color: "Preta", price: 12999 },
+      { sku: "MOCHILA-BRANCA", color: "Branca", price: 12999 },
     ],
   },
   {
@@ -292,8 +292,8 @@ const products = [
     description: "Meia alta de algodão, confortável e durável.",
     categoryName: "Acessórios",
     variants: [
-      { color: "Branca", price: 1999 },
-      { color: "Preta", price: 1999 },
+      { sku: "MEIA-ALTA-BRANCA", color: "Branca", price: 1999 },
+      { sku: "MEIA-ALTA-PRETA", color: "Preta", price: 1999 },
     ],
   },
   {
@@ -301,9 +301,9 @@ const products = [
     description: "Boné Nocta com design moderno e ajuste confortável.",
     categoryName: "Acessórios",
     variants: [
-      { color: "Preto", price: 8999 },
-      { color: "Vinho", price: 8999 },
-      { color: "Azul", price: 8999 },
+      { sku: "BONE-NOCTA-PRETO", color: "Preto", price: 8999 },
+      { sku: "BONE-NOCTA-VINHO", color: "Vinho", price: 8999 },
+      { sku: "BONE-NOCTA-AZUL", color: "Azul", price: 8999 },
     ],
   },
   {
@@ -311,9 +311,9 @@ const products = [
     description: "Boné com aba curva, estilo clássico e versátil.",
     categoryName: "Acessórios",
     variants: [
-      { color: "Azul", price: 7999 },
-      { color: "Bege", price: 7999 },
-      { color: "Verde", price: 7999 },
+      { sku: "BONECURVO-CURVO-AZUL", color: "Azul", price: 7999 },
+      { sku: "BONECURVO-CURVO-BEGE", color: "Bege", price: 7999 },
+      { sku: "BONECURVO-CURVO-VERDE", color: "Verde", price: 7999 },
     ],
   },
 
@@ -324,9 +324,9 @@ const products = [
       "Shorts esportivo para atividades físicas, com tecido que absorve o suor.",
     categoryName: "Bermuda & Shorts",
     variants: [
-      { color: "Preto", price: 6999 },
-      { color: "Azul", price: 6999 },
-      { color: "Verde", price: 6999 },
+      { sku: "SHORTS-ACTIVE-PRETO", color: "Preto", price: 6999 },
+      { sku: "SHORTS-ACTIVE-AZUL", color: "Azul", price: 6999 },
+      { sku: "SHORTS-ACTIVE-VERDE", color: "Verde", price: 6999 },
     ],
   },
   {
@@ -334,9 +334,9 @@ const products = [
     description: "Shorts casual confortável, perfeito para o dia a dia.",
     categoryName: "Bermuda & Shorts",
     variants: [
-      { color: "Verde", price: 5999 },
-      { color: "Preto", price: 5999 },
-      { color: "Azul", price: 5999 },
+      { sku: "SHORTS-CORE-VERDE", color: "Verde", price: 5999 },
+      { sku: "SHORTS-CORE-PRETO", color: "Preto", price: 5999 },
+      { sku: "SHORTS-CORE-AZUL", color: "Azul", price: 5999 },
     ],
   },
   {
@@ -345,9 +345,9 @@ const products = [
       "Shorts com design moderno e confortável, ideal para diversas ocasiões.",
     categoryName: "Bermuda & Shorts",
     variants: [
-      { color: "Marrom", price: 7499 },
-      { color: "Preto", price: 7499 },
-      { color: "Bege", price: 7499 },
+      { sku: "SHORTS-CHALLENGER-MARROM", color: "Marrom", price: 7499 },
+      { sku: "SHORTS-CHALLENGER-PRETO", color: "Preto", price: 7499 },
+      { sku: "SHORTS-CHALLENGER-BEGE", color: "Bege", price: 7499 },
     ],
   },
   {
@@ -356,9 +356,9 @@ const products = [
       "Bermuda premium com qualidade superior e design diferenciado.",
     categoryName: "Bermuda & Shorts",
     variants: [
-      { color: "Verde", price: 8999 },
-      { color: "Preta", price: 8999 },
-      { color: "Azul", price: 8999 },
+      { sku: "BERMUDA-PREMIER-VERDE", color: "Verde", price: 8999 },
+      { sku: "BERMUDA-PREMIER-PRETA", color: "Preta", price: 8999 },
+      { sku: "BERMUDA-PREMIER-AZUL", color: "Azul", price: 8999 },
     ],
   },
 
@@ -369,9 +369,9 @@ const products = [
       "Calça esportiva Nike Club, confortável e versátil para treinos e uso casual.",
     categoryName: "Calças",
     variants: [
-      { color: "Bege", price: 15999 },
-      { color: "Preta", price: 15999 },
-      { color: "Vinho", price: 15999 },
+      { sku: "CALCA-NIKE-CLUB-BEGE", color: "Bege", price: 15999 },
+      { sku: "CALCA-NIKE-CLUB-PRETA", color: "Preta", price: 15999 },
+      { sku: "CALCA-NIKE-CLUB-VINHO", color: "Vinho", price: 15999 },
     ],
   },
   {
@@ -380,9 +380,9 @@ const products = [
       "Calça de malha com tecido macio e confortável, ideal para relaxar.",
     categoryName: "Calças",
     variants: [
-      { color: "Preta", price: 12999 },
-      { color: "Branca", price: 12999 },
-      { color: "Azul", price: 12999 },
+      { sku: "CALCA-KNIT-PRETA", color: "Preta", price: 12999 },
+      { sku: "CALCA-KNIT-BRANCA", color: "Branca", price: 12999 },
+      { sku: "CALCA-KNIT-AZUL", color: "Azul", price: 12999 },
     ],
   },
   {
@@ -391,9 +391,9 @@ const products = [
       "Calça com design urbano e moderno, perfeita para o street style.",
     categoryName: "Calças",
     variants: [
-      { color: "Bege", price: 13999 },
-      { color: "Branca", price: 13999 },
-      { color: "Preta", price: 13999 },
+      { sku: "CALCA-BROOKLIN-BEGE", color: "Bege", price: 13999 },
+      { sku: "CALCA-BROOKLIN-BRANCA", color: "Branca", price: 13999 },
+      { sku: "CALCA-BROOKLIN-PRETA", color: "Preta", price: 13999 },
     ],
   },
   {
@@ -402,9 +402,9 @@ const products = [
       "Calça Jordan com qualidade premium e design icônico da marca.",
     categoryName: "Calças",
     variants: [
-      { color: "Verde", price: 18999 },
-      { color: "Preta", price: 18999 },
-      { color: "Azul", price: 18999 },
+      { sku: "CALÇA-JORDAN-VERDE", color: "Verde", price: 18999 },
+      { sku: "CALÇA-JORDAN-PRETA", color: "Preta", price: 18999 },
+      { sku: "CALÇA-JORDAN-AZUL", color: "Azul", price: 18999 },
     ],
   },
 
@@ -415,9 +415,9 @@ const products = [
       "Camiseta ACG com design técnico e material de alta qualidade.",
     categoryName: "Camisetas",
     variants: [
-      { color: "Bege", price: 6999 },
-      { color: "Preta", price: 6999 },
-      { color: "Branca", price: 6999 },
+      { sku: "CAMISETA-ACG-BEGE", color: "Bege", price: 6999 },
+      { sku: "CAMISETA-ACG-PRETA", color: "Preta", price: 6999 },
+      { sku: "CAMISETA-ACG-BRANCA", color: "Branca", price: 6999 },
     ],
   },
   {
@@ -426,8 +426,8 @@ const products = [
       "Camiseta para corrida com tecido respirável e conforto superior.",
     categoryName: "Camisetas",
     variants: [
-      { color: "Preta", price: 5999 },
-      { color: "Azul", price: 5999 },
+      { sku: "CAMISETA-RUN-PRETA", color: "Preta", price: 5999 },
+      { sku: "CAMISETA-RUN-AZUL", color: "Azul", price: 5999 },
     ],
   },
   {
@@ -436,8 +436,8 @@ const products = [
       "Camiseta esportiva para atividades físicas com tecnologia Dri-FIT.",
     categoryName: "Camisetas",
     variants: [
-      { color: "Branca", price: 5499 },
-      { color: "Preta", price: 5499 },
+      { sku: "CAMISETA-ACTIVE-BRANCA", color: "Branca", price: 5499 },
+      { sku: "CAMISETA-ACTIVE-PRETA", color: "Preta", price: 5499 },
     ],
   },
   {
@@ -446,8 +446,8 @@ const products = [
       "Camiseta com estampa inspirada na natureza, confortável e estilosa.",
     categoryName: "Camisetas",
     variants: [
-      { color: "Preta", price: 6499 },
-      { color: "Azul", price: 6499 },
+      { sku: "CAMISETA-NATURE-PRETA", color: "Preta", price: 6499 },
+      { sku: "CAMISETA-NATURE-AZUL", color: "Azul", price: 6499 },
     ],
   },
 
@@ -458,8 +458,8 @@ const products = [
       "Jaqueta corta-vento leve e resistente, ideal para atividades ao ar livre.",
     categoryName: "Jaquetas & Moletons",
     variants: [
-      { color: "Preto", price: 19999 },
-      { color: "Branco", price: 19999 },
+      { sku: "CORTE-VENTO-PRETO", color: "Preto", price: 19999 },
+      { sku: "CORTE-VENTO-BRANCO", color: "Branco", price: 19999 },
     ],
   },
   {
@@ -468,8 +468,8 @@ const products = [
       "Jaqueta Windrunner com design clássico e proteção contra o vento.",
     categoryName: "Jaquetas & Moletons",
     variants: [
-      { color: "Azul", price: 22999 },
-      { color: "Bege", price: 22999 },
+      { sku: "JAQUETA-WINDRUNNER-AZUL", color: "Azul", price: 22999 },
+      { sku: "JAQUETA-WINDRUNNER-BEGE", color: "Bege", price: 22999 },
     ],
   },
   {
@@ -478,8 +478,8 @@ const products = [
       "Jaqueta com estilo urbano e moderno, perfeita para compor looks casuais.",
     categoryName: "Jaquetas & Moletons",
     variants: [
-      { color: "Marrom", price: 17999 },
-      { color: "Cinza", price: 17999 },
+      { sku: "JAQUETA-STYLE-MARROM", color: "Marrom", price: 17999 },
+      { sku: "JAQUETA-STYLE-CINZA", color: "Cinza", price: 17999 },
     ],
   },
   {
@@ -487,8 +487,8 @@ const products = [
     description: "Jaqueta Nike Club com qualidade premium e design atemporal.",
     categoryName: "Jaquetas & Moletons",
     variants: [
-      { color: "Azul", price: 25999 },
-      { color: "Amarela", price: 25999 },
+      { sku: "JAQUETA-NIKE-CLUB-AZUL", color: "Azul", price: 25999 },
+      { sku: "JAQUETA-NIKE-CLUB-AMARELA", color: "Amarela", price: 25999 },
     ],
   },
 
@@ -499,9 +499,9 @@ const products = [
       "Tênis Nike Vomero com tecnologia de amortecimento superior para corridas.",
     categoryName: "Tênis",
     variants: [
-      { color: "Preto", price: 79999 },
-      { color: "Branco", price: 79999 },
-      { color: "Azul", price: 79999 },
+      { sku: "TENIS-NIKE-VOMERO-PRETO", color: "Preto", price: 79999 },
+      { sku: "TENIS-NIKE-VOMERO-BRANCO", color: "Branco", price: 79999 },
+      { sku: "TENIS-NIKE-VOMERO-AZUL", color: "Azul", price: 79999 },
     ],
   },
   {
@@ -509,9 +509,9 @@ const products = [
     description: "Tênis Nike com design Panda icônico, confortável e estiloso.",
     categoryName: "Tênis",
     variants: [
-      { color: "Verde", price: 69999 },
-      { color: "Azul", price: 69999 },
-      { color: "Preto", price: 69999 },
+      { sku: "TENIS-NIKE-PANDA-VERDE", color: "Verde", price: 69999 },
+      { sku: "TENIS-NIKE-PANDA-AZUL", color: "Azul", price: 69999 },
+      { sku: "TENIS-NIKE-PANDA-PRETO", color: "Preto", price: 69999 },
     ],
   },
   {
@@ -520,8 +520,8 @@ const products = [
       "Tênis Nike Air Force 1, um clássico atemporal com design icônico.",
     categoryName: "Tênis",
     variants: [
-      { color: "Preto", price: 89999 },
-      { color: "Branco", price: 89999 },
+      { sku: "TENIS-NIKE-AIR-FORCE-PRETO", color: "Preto", price: 89999 },
+      { sku: "TENIS-NIKE-AIR-FORCE-BRANCO", color: "Branco", price: 89999 },
     ],
   },
   {
@@ -529,9 +529,9 @@ const products = [
     description: "Tênis Nike Dunk Low com design retrô e conforto moderno.",
     categoryName: "Tênis",
     variants: [
-      { color: "Branco", price: 75999 },
-      { color: "Preto", price: 75999 },
-      { color: "Azul", price: 75999 },
+      { sku: "TENIS-NIKE-DUNK-LOW-BRANCO", color: "Branco", price: 75999 },
+      { sku: "TENIS-NIKE-DUNK-LOW-PRETO", color: "Preto", price: 75999 },
+      { sku: "TENIS-NIKE-DUNK-LOW-AZUL", color: "Azul", price: 75999 },
     ],
   },
 ];
@@ -601,6 +601,7 @@ async function main() {
 
         await db.insert(productVariantTable).values({
           id: variantId,
+          sku: variantData.sku,
           name: variantData.color,
           productId: productId,
           color: variantData.color,
