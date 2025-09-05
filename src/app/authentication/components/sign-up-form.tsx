@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useMergeGuestCart } from "@/hooks/mutations/use-merge-guest-cart";
 
 const formSchema = z
   .object({
@@ -47,6 +48,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignUpForm = () => {
   const router = useRouter();
+  const mergeGuestCartMutation = useMergeGuestCart();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,7 +65,10 @@ const SignUpForm = () => {
       email: values.email, // required
       password: values.password, // required
       fetchOptions: {
-        onSuccess: () => {
+        onSuccess: async () => {
+          // Fazer merge do guest cart após cadastro bem-sucedido
+          mergeGuestCartMutation.mutate();
+          toast.success("Conta criada com sucesso!");
           router.push("/");
         },
         onError: (error) => {

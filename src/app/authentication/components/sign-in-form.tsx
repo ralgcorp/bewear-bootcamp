@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useMergeGuestCart } from "@/hooks/mutations/use-merge-guest-cart";
 
 const formSchema = z.object({
   email: z.email("Email inválido"),
@@ -35,6 +36,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignInForm = () => {
   const router = useRouter();
+  const mergeGuestCartMutation = useMergeGuestCart();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,6 +50,12 @@ const SignInForm = () => {
       email: values.email,
       password: values.password,
       fetchOptions: {
+        onSuccess: async () => {
+          // Fazer merge do guest cart após login bem-sucedido
+          mergeGuestCartMutation.mutate();
+          toast.success("Login realizado com sucesso!");
+          router.push("/");
+        },
         onError: (ctx) => {
           if (ctx.error.code === "USER_NOT_FOUND") {
             toast.error("E-mail não encontrado.");
@@ -73,6 +81,17 @@ const SignInForm = () => {
   const handleSignInWithGoogle = async () => {
     await authClient.signIn.social({
       provider: "google",
+      fetchOptions: {
+        onSuccess: async () => {
+          // Fazer merge do guest cart após login bem-sucedido
+          mergeGuestCartMutation.mutate();
+          toast.success("Login realizado com sucesso!");
+          router.push("/");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      },
     });
   };
 

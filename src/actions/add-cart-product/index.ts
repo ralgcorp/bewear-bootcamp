@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { db } from "@/db";
 import { cartItemTable, cartTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
+import { getGuestCartId } from "@/lib/guest-cart";
 
 import { AddProductToCartSchema, addProductToCartSchema } from "./schema";
 
@@ -14,9 +15,7 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  if (!session?.user) {
-    throw new Error("Unauthorized");
-  }
+
   const productVariant = await db.query.productVariantTable.findFirst({
     where: (productVariant, { eq }) =>
       eq(productVariant.id, data.productVariantId),
@@ -24,19 +23,44 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
   if (!productVariant) {
     throw new Error("Product variant not found");
   }
-  const cart = await db.query.cartTable.findFirst({
-    where: (cart, { eq }) => eq(cart.userId, session.user.id),
-  });
-  let cartId = cart?.id;
-  if (!cartId) {
-    const [newCart] = await db
-      .insert(cartTable)
-      .values({
-        userId: session.user.id,
-      })
-      .returning();
-    cartId = newCart.id;
+
+  let cartId: string;
+
+  if (session?.user) {
+    // Usuário logado - usar carrinho do usuário
+    const cart = await db.query.cartTable.findFirst({
+      where: (cart, { eq }) => eq(cart.userId, session.user.id),
+    });
+    if (!cart) {
+      const [newCart] = await db
+        .insert(cartTable)
+        .values({
+          userId: session.user.id,
+        })
+        .returning();
+      cartId = newCart.id;
+    } else {
+      cartId = cart.id;
+    }
+  } else {
+    // Usuário não logado - usar carrinho de convidado
+    const guestId = await getGuestCartId();
+    const cart = await db.query.cartTable.findFirst({
+      where: (cart, { eq }) => eq(cart.guestId, guestId),
+    });
+    if (!cart) {
+      const [newCart] = await db
+        .insert(cartTable)
+        .values({
+          guestId,
+        })
+        .returning();
+      cartId = newCart.id;
+    } else {
+      cartId = cart.id;
+    }
   }
+
   const cartItem = await db.query.cartItemTable.findFirst({
     where: (cartItem, { eq }) =>
       eq(cartItem.cartId, cartId) &&

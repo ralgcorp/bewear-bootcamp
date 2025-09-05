@@ -254,9 +254,10 @@ export const shippingAddressRelations = relations(
 
 export const cartTable = pgTable("cart", {
   id: uuid().primaryKey().defaultRandom(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+  userId: text("user_id").references(() => userTable.id, {
+    onDelete: "cascade",
+  }),
+  guestId: text("guest_id"), // Para carrinhos de convidados
   shippingAddressId: uuid("shipping_address_id").references(
     () => shippingAddressTable.id,
     { onDelete: "set null" },

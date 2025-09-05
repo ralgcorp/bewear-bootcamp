@@ -15,6 +15,13 @@
       "when": 1756550234207,
       "tag": "0001_overconfident_true_believers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757097645553,
+      "tag": "0002_nosy_mathemanic",
+      "breakpoints": true
     }
   ]
 }

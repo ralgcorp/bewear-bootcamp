@@ -9,12 +9,12 @@ import { cartItemTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { getGuestCartId } from "@/lib/guest-cart";
 
-import { decreaseCartProductQuantitySchema } from "./schema";
+import { increaseCartProductQuantitySchema } from "./schema";
 
-export const decreaseCartProductQuantity = async (
-  data: z.infer<typeof decreaseCartProductQuantitySchema>,
+export const increaseCartProductQuantity = async (
+  data: z.infer<typeof increaseCartProductQuantitySchema>,
 ) => {
-  decreaseCartProductQuantitySchema.parse(data);
+  increaseCartProductQuantitySchema.parse(data);
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -43,12 +43,8 @@ export const decreaseCartProductQuantity = async (
     }
   }
 
-  if (cartItem.quantity === 1) {
-    await db.delete(cartItemTable).where(eq(cartItemTable.id, cartItem.id));
-    return;
-  }
   await db
     .update(cartItemTable)
-    .set({ quantity: cartItem.quantity - 1 })
+    .set({ quantity: cartItem.quantity + 1 })
     .where(eq(cartItemTable.id, cartItem.id));
 };
