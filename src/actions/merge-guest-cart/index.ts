@@ -19,9 +19,10 @@ export const mergeGuestCart = async () => {
       return; // Retornar silenciosamente em vez de lançar erro
     }
 
-    const guestId = await getGuestCartId();
+    console.log("Starting guest cart merge for user:", session.user.id);
 
-    // Buscar carrinho do convidado
+    // Buscar o carrinho de convidado da sessão ativa (do cookie atual)
+    const guestId = await getGuestCartId();
     const guestCart = await db.query.cartTable.findFirst({
       where: (cart, { eq }) => eq(cart.guestId, guestId),
       with: {
@@ -29,8 +30,11 @@ export const mergeGuestCart = async () => {
       },
     });
 
-    if (!guestCart || guestCart.items.length === 0) {
-      // Não há carrinho de convidado ou está vazio, não há nada para fazer
+    console.log(`Found guest cart with ID: ${guestId}, items: ${guestCart?.items.length || 0}`);
+
+    // Mesclar sempre, mesmo se o carrinho estiver vazio
+    if (!guestCart) {
+      console.log("No guest cart found, nothing to merge");
       return;
     }
 
@@ -52,37 +56,50 @@ export const mergeGuestCart = async () => {
       userCart = { ...newUserCart, items: [] };
     }
 
-    // Para cada item do carrinho de convidado
-    for (const guestItem of guestCart.items) {
-      // Verificar se já existe um item igual no carrinho do usuário
-      const existingUserItem = userCart.items.find(
-        (item) => item.productVariantId === guestItem.productVariantId,
-      );
+    // Processar itens do carrinho de convidado (se houver)
+    if (guestCart.items.length > 0) {
+      console.log(`Merging ${guestCart.items.length} items from guest cart`);
+      
+      // Para cada item do carrinho de convidado
+      for (const guestItem of guestCart.items) {
+        // Verificar se já existe um item igual no carrinho do usuário
+        const existingUserItem = userCart.items.find(
+          (item) => item.productVariantId === guestItem.productVariantId,
+        );
 
-      if (existingUserItem) {
-        // Se já existe, somar as quantidades
-        await db
-          .update(cartItemTable)
-          .set({
-            quantity: existingUserItem.quantity + guestItem.quantity,
-          })
-          .where(eq(cartItemTable.id, existingUserItem.id));
-      } else {
-        // Se não existe, mover o item para o carrinho do usuário
-        await db
-          .update(cartItemTable)
-          .set({
-            cartId: userCart.id,
-          })
-          .where(eq(cartItemTable.id, guestItem.id));
+        if (existingUserItem) {
+          // Se já existe, somar as quantidades
+          await db
+            .update(cartItemTable)
+            .set({
+              quantity: existingUserItem.quantity + guestItem.quantity,
+            })
+            .where(eq(cartItemTable.id, existingUserItem.id));
+          console.log(`Updated quantity for product variant: ${guestItem.productVariantId}`);
+        } else {
+          // Se não existe, mover o item para o carrinho do usuário
+          await db
+            .update(cartItemTable)
+            .set({
+              cartId: userCart.id,
+            })
+            .where(eq(cartItemTable.id, guestItem.id));
+          console.log(`Moved item to user cart: ${guestItem.productVariantId}`);
+        }
       }
+    } else {
+      console.log("Guest cart is empty, no items to merge");
     }
 
-    // Deletar o carrinho de convidado vazio
+    // Deletar o carrinho de convidado (mesmo se vazio)
     await db.delete(cartTable).where(eq(cartTable.id, guestCart.id));
+    console.log("Deleted guest cart");
 
     // Limpar o cookie do guest cart
     await clearGuestCartId();
+    console.log("Cleared guest cart cookie");
+
+    console.log("Guest cart merge completed successfully");
   } catch (error) {
     console.error("Error merging guest cart:", error);
     // Não lançar erro para não quebrar o fluxo de login
