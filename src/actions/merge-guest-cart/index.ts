@@ -9,29 +9,37 @@ import { auth } from "@/lib/auth";
 import { getGuestCartId, clearGuestCartId } from "@/lib/guest-cart";
 
 export const mergeGuestCart = async () => {
-  // Tentar obter a sessão com retry
-  let session = null;
-  let attempts = 0;
-  const maxAttempts = 5;
+  try {
+    // Aguardar um pouco para a sessão ser estabelecida
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    
+    // Tentar obter a sessão com retry
+    let session = null;
+    let attempts = 0;
+    const maxAttempts = 10;
 
-  while (attempts < maxAttempts && !session?.user) {
-    session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    while (attempts < maxAttempts && !session?.user) {
+      try {
+        session = await auth.api.getSession({
+          headers: await headers(),
+        });
+      } catch (error) {
+        console.log(`Attempt ${attempts + 1} failed to get session:`, error);
+      }
+
+      if (!session?.user) {
+        // Aguardar um pouco antes de tentar novamente
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        attempts++;
+      }
+    }
 
     if (!session?.user) {
-      // Aguardar um pouco antes de tentar novamente
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      attempts++;
+      console.log(
+        "Could not get user session after multiple attempts, skipping guest cart merge",
+      );
+      return; // Retornar silenciosamente em vez de lançar erro
     }
-  }
-
-  if (!session?.user) {
-    console.log(
-      "Could not get user session after multiple attempts, skipping guest cart merge",
-    );
-    return; // Retornar silenciosamente em vez de lançar erro
-  }
 
   const guestId = await getGuestCartId();
 
@@ -95,6 +103,10 @@ export const mergeGuestCart = async () => {
   // Deletar o carrinho de convidado vazio
   await db.delete(cartTable).where(eq(cartTable.id, guestCart.id));
 
-  // Limpar o cookie do guest cart
-  await clearGuestCartId();
+    // Limpar o cookie do guest cart
+    await clearGuestCartId();
+  } catch (error) {
+    console.error("Error merging guest cart:", error);
+    // Não lançar erro para não quebrar o fluxo de login
+  }
 };

@@ -12,12 +12,16 @@ export const useMergeGuestCart = () => {
     mutationKey: getMergeGuestCartMutationKey(),
     mutationFn: async () => {
       // Aguardar um pouco para a sessão ser estabelecida
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       return mergeGuestCart();
     },
     onSuccess: () => {
       // Invalidate cart query to refetch with merged data
       queryClient.invalidateQueries({ queryKey: getUseCartQueryKey() });
+    },
+    onError: (error) => {
+      console.error("Failed to merge guest cart:", error);
+      // Não mostrar erro para o usuário, pois o login foi bem-sucedido
     },
   });
 };

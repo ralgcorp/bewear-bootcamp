@@ -25,7 +25,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useMergeGuestCart } from "@/hooks/mutations/use-merge-guest-cart";
+import { useCheckAndMergeGuestCart } from "@/hooks/mutations/use-check-and-merge-guest-cart";
 
 const formSchema = z.object({
   email: z.email("Email inválido"),
@@ -36,7 +36,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignInForm = () => {
   const router = useRouter();
-  const mergeGuestCartMutation = useMergeGuestCart();
+  const checkAndMergeGuestCartMutation = useCheckAndMergeGuestCart();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +52,9 @@ const SignInForm = () => {
       fetchOptions: {
         onSuccess: async () => {
           // Fazer merge do guest cart após login bem-sucedido
-          mergeGuestCartMutation.mutate();
+          setTimeout(() => {
+            checkAndMergeGuestCartMutation.mutate();
+          }, 2000);
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },
@@ -84,7 +86,9 @@ const SignInForm = () => {
       fetchOptions: {
         onSuccess: async () => {
           // Fazer merge do guest cart após login bem-sucedido
-          mergeGuestCartMutation.mutate();
+          setTimeout(() => {
+            checkAndMergeGuestCartMutation.mutate();
+          }, 2000);
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },
