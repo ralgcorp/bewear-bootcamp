@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { db } from "@/db";
 import { cartTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { getGuestCartId } from "@/lib/guest-cart";
+import { getGuestCartId, cleanupDuplicateGuestCarts } from "@/lib/guest-cart";
 
 export const getCart = async () => {
   const session = await auth.api.getSession({
@@ -54,6 +54,9 @@ export const getCart = async () => {
   }
 
   // Se não está logado, buscar carrinho de convidado
+  // Primeiro, limpar carrinhos duplicados
+  await cleanupDuplicateGuestCarts();
+  
   const guestId = await getGuestCartId();
   const cart = await db.query.cartTable.findFirst({
     where: (cart, { eq }) => eq(cart.guestId, guestId),
