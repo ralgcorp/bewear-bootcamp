@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { db } from "@/db";
 import { cartItemTable, cartTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { getGuestCartId } from "@/lib/guest-cart";
+import { getGuestCartId, createNewGuestSession } from "@/lib/guest-cart";
 
 import { AddProductToCartSchema, addProductToCartSchema } from "./schema";
 
@@ -44,11 +44,26 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
     }
   } else {
     // Usuário não logado - usar carrinho de convidado
-    const guestId = await getGuestCartId();
-    const cart = await db.query.cartTable.findFirst({
+    let guestId = await getGuestCartId();
+    
+    // Verificar se existe carrinho com esse guestId
+    let cart = await db.query.cartTable.findFirst({
       where: (cart, { eq }) => eq(cart.guestId, guestId),
     });
+    
+    // Se não existe carrinho, criar nova sessão de convidado
     if (!cart) {
+      console.log("No guest cart found, creating new guest session");
+      guestId = await createNewGuestSession();
+      
+      // Buscar novamente após criar nova sessão
+      cart = await db.query.cartTable.findFirst({
+        where: (cart, { eq }) => eq(cart.guestId, guestId),
+      });
+    }
+    
+    if (!cart) {
+      // Criar carrinho com o novo guestId
       const [newCart] = await db
         .insert(cartTable)
         .values({

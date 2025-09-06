@@ -27,6 +27,16 @@ export const Header = () => {
   const { data: session } = authClient.useSession();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      // Fazer logout
+      await authClient.signOut();
+      // Nova sessão será criada apenas quando adicionar produto ao carrinho
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
     <header className="container mx-auto flex items-center justify-between p-5">
       <div className="w-[250px] px-5">
@@ -38,7 +48,7 @@ export const Header = () => {
                   variant="link"
                   size="icon"
                   className="text-black [&_svg:not([class*='size-'])]:size-auto"
-                  onClick={() => authClient.signOut()}
+                  onClick={handleLogout}
                 >
                   <UserIcon />
                 </Button>
@@ -120,7 +130,7 @@ export const Header = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => authClient.signOut()}
+                      onClick={handleLogout}
                     >
                       <LogOutIcon />
                     </Button>

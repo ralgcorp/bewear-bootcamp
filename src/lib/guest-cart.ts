@@ -48,6 +48,28 @@ export async function clearGuestCartId(): Promise<void> {
   cookieStore.delete(GUEST_CART_COOKIE_NAME);
 }
 
+export async function createNewGuestSession(): Promise<string> {
+  console.log("Creating new guest session after logout");
+
+  // Limpar cookie existente
+  await clearGuestCartId();
+
+  // Gerar novo ID de convidado
+  const newGuestId = randomUUID();
+  console.log("New guest cart ID:", newGuestId);
+
+  // Definir novo cookie
+  const cookieStore = await cookies();
+  cookieStore.set(GUEST_CART_COOKIE_NAME, newGuestId, {
+    maxAge: GUEST_CART_COOKIE_MAX_AGE,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
+
+  return newGuestId;
+}
+
 export async function cleanupDuplicateGuestCarts(): Promise<void> {
   try {
     // Buscar todos os carrinhos de convidado
@@ -67,7 +89,9 @@ export async function cleanupDuplicateGuestCarts(): Promise<void> {
     const mainCart = guestCarts[0];
     const duplicateCarts = guestCarts.slice(1);
 
-    console.log(`Found ${duplicateCarts.length} duplicate guest carts, consolidating...`);
+    console.log(
+      `Found ${duplicateCarts.length} duplicate guest carts, consolidating...`,
+    );
 
     // Mover todos os itens dos carrinhos duplicados para o carrinho principal
     for (const duplicateCart of duplicateCarts) {
