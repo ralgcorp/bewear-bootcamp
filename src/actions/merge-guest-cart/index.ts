@@ -10,34 +10,12 @@ import { getGuestCartId, clearGuestCartId } from "@/lib/guest-cart";
 
 export const mergeGuestCart = async () => {
   try {
-    // Aguardar um pouco para a sessão ser estabelecida
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-    // Tentar obter a sessão com retry
-    let session = null;
-    let attempts = 0;
-    const maxAttempts = 10;
-
-    while (attempts < maxAttempts && !session?.user) {
-      try {
-        session = await auth.api.getSession({
-          headers: await headers(),
-        });
-      } catch (error) {
-        console.log(`Attempt ${attempts + 1} failed to get session:`, error);
-      }
-
-      if (!session?.user) {
-        // Aguardar um pouco antes de tentar novamente
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        attempts++;
-      }
-    }
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
     if (!session?.user) {
-      console.log(
-        "Could not get user session after multiple attempts, skipping guest cart merge",
-      );
+      console.log("User not logged in, skipping guest cart merge");
       return; // Retornar silenciosamente em vez de lançar erro
     }
 

@@ -8,9 +8,6 @@ export const simpleMergeGuestCart = async () => {
   try {
     console.log("Starting simple merge guest cart...");
     
-    // Aguardar um pouco para a sessão ser estabelecida
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
     const session = await auth.api.getSession({
       headers: await headers(),
     });

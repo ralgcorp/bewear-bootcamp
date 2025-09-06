@@ -52,9 +52,7 @@ const SignInForm = () => {
       fetchOptions: {
         onSuccess: async () => {
           // Fazer merge do guest cart após login bem-sucedido
-          setTimeout(() => {
-            simpleMergeGuestCartMutation.mutate();
-          }, 3000);
+          simpleMergeGuestCartMutation.mutate();
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },
@@ -86,9 +84,7 @@ const SignInForm = () => {
       fetchOptions: {
         onSuccess: async () => {
           // Fazer merge do guest cart após login bem-sucedido
-          setTimeout(() => {
-            simpleMergeGuestCartMutation.mutate();
-          }, 3000);
+          simpleMergeGuestCartMutation.mutate();
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },
