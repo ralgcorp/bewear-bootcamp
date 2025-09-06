@@ -38,62 +38,63 @@ export const mergeGuestCart = async () => {
       return;
     }
 
-    // Buscar ou criar carrinho do usuário
-    let userCart = await db.query.cartTable.findFirst({
+    // Verificar se o usuário já tem um carrinho
+    const existingUserCart = await db.query.cartTable.findFirst({
       where: (cart, { eq }) => eq(cart.userId, session.user.id),
       with: {
         items: true,
       },
     });
 
-    if (!userCart) {
-      const [newUserCart] = await db
-        .insert(cartTable)
-        .values({
-          userId: session.user.id,
-        })
-        .returning();
-      userCart = { ...newUserCart, items: [] };
-    }
-
-    // Processar itens do carrinho de convidado (se houver)
-    if (guestCart.items.length > 0) {
-      console.log(`Merging ${guestCart.items.length} items from guest cart`);
+    if (existingUserCart) {
+      // Se o usuário já tem carrinho, mesclar com o carrinho guest
+      console.log(`User already has cart with ${existingUserCart.items.length} items, merging...`);
       
-      // Para cada item do carrinho de convidado
-      for (const guestItem of guestCart.items) {
-        // Verificar se já existe um item igual no carrinho do usuário
-        const existingUserItem = userCart.items.find(
-          (item) => item.productVariantId === guestItem.productVariantId,
+      // Mover itens do carrinho do usuário para o carrinho guest
+      for (const userItem of existingUserCart.items) {
+        const existingGuestItem = guestCart.items.find(
+          (item) => item.productVariantId === userItem.productVariantId,
         );
 
-        if (existingUserItem) {
-          // Se já existe, somar as quantidades
+        if (existingGuestItem) {
+          // Se já existe no guest cart, somar as quantidades
           await db
             .update(cartItemTable)
             .set({
-              quantity: existingUserItem.quantity + guestItem.quantity,
+              quantity: existingGuestItem.quantity + userItem.quantity,
             })
-            .where(eq(cartItemTable.id, existingUserItem.id));
-          console.log(`Updated quantity for product variant: ${guestItem.productVariantId}`);
+            .where(eq(cartItemTable.id, existingGuestItem.id));
+          console.log(`Updated quantity for product variant: ${userItem.productVariantId}`);
         } else {
-          // Se não existe, mover o item para o carrinho do usuário
+          // Se não existe no guest cart, mover o item
           await db
             .update(cartItemTable)
             .set({
-              cartId: userCart.id,
+              cartId: guestCart.id,
             })
-            .where(eq(cartItemTable.id, guestItem.id));
-          console.log(`Moved item to user cart: ${guestItem.productVariantId}`);
+            .where(eq(cartItemTable.id, userItem.id));
+          console.log(`Moved user item to guest cart: ${userItem.productVariantId}`);
         }
       }
-    } else {
-      console.log("Guest cart is empty, no items to merge");
+      
+      // Deletar o carrinho antigo do usuário
+      await db.delete(cartTable).where(eq(cartTable.id, existingUserCart.id));
+      console.log("Deleted old user cart");
     }
 
-    // Deletar o carrinho de convidado (mesmo se vazio)
-    await db.delete(cartTable).where(eq(cartTable.id, guestCart.id));
-    console.log("Deleted guest cart");
+    // Adicionar user_id ao carrinho guest existente
+    await db
+      .update(cartTable)
+      .set({
+        userId: session.user.id,
+        guestId: null, // Remove o guestId pois agora é do usuário
+      })
+      .where(eq(cartTable.id, guestCart.id));
+    
+    console.log("Added user_id to guest cart, removed guest_id");
+
+    // O carrinho guest agora pertence ao usuário, não precisa deletar
+    console.log(`Guest cart now belongs to user with ${guestCart.items.length} items`);
 
     // Limpar o cookie do guest cart
     await clearGuestCartId();
