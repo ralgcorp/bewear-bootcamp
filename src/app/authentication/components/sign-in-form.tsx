@@ -51,8 +51,10 @@ const SignInForm = () => {
       password: values.password,
       fetchOptions: {
         onSuccess: async () => {
-          // Fazer merge do guest cart após login bem-sucedido
-          simpleMergeGuestCartMutation.mutate();
+          // Aguardar um pouco para a sessão ser estabelecida
+          setTimeout(() => {
+            simpleMergeGuestCartMutation.mutate();
+          }, 1000);
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },
@@ -83,8 +85,10 @@ const SignInForm = () => {
       provider: "google",
       fetchOptions: {
         onSuccess: async () => {
-          // Fazer merge do guest cart após login bem-sucedido
-          simpleMergeGuestCartMutation.mutate();
+          // Aguardar um pouco para a sessão ser estabelecida
+          setTimeout(() => {
+            simpleMergeGuestCartMutation.mutate();
+          }, 1000);
           toast.success("Login realizado com sucesso!");
           router.push("/");
         },

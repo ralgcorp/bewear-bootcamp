@@ -66,8 +66,10 @@ const SignUpForm = () => {
       password: values.password, // required
       fetchOptions: {
         onSuccess: async () => {
-          // Fazer merge do guest cart após cadastro bem-sucedido
-          simpleMergeGuestCartMutation.mutate();
+          // Aguardar um pouco para a sessão ser estabelecida
+          setTimeout(() => {
+            simpleMergeGuestCartMutation.mutate();
+          }, 1000);
           toast.success("Conta criada com sucesso!");
           router.push("/");
         },
